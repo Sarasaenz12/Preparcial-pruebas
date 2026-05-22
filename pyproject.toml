@@ -16,3 +16,10 @@ dev = [
     "pytest-bdd>=8.1.0",
     "pytest-cov>=7.1.0",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "smoke: pruebas rapidas del flujo principal",
+    "critical: pruebas de funcionalidad critica",
+    "regression: pruebas de regresion",
+]
