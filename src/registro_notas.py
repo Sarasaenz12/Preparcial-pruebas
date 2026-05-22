@@ -15,6 +15,7 @@ class RegistroNotas:
 
     def registrar_nota(self, materia, semestre, nota):
         self._validar_nota(nota)
+        self._verificar_duplicado(materia, semestre)
         self._notas[(materia, semestre)] = nota
 
     def _validar_nota(self, nota):
@@ -22,6 +23,12 @@ class RegistroNotas:
             raise NotaInvalidaError(
                 f"La nota {nota} no es valida. Debe estar entre "
                 f"{self.NOTA_MINIMA} y {self.NOTA_MAXIMA}."
+            )
+        
+    def _verificar_duplicado(self, materia, semestre):   # ← método nuevo
+        if (materia, semestre) in self._notas:
+            raise NotaDuplicadaError(
+                f"Ya existe una nota para '{materia}' en '{semestre}'."
             )
         
     def aprueba(self, materia: str, semestre: str) -> bool:
@@ -39,3 +46,6 @@ class RegistroNotas:
 
     def obtener_nota(self, materia, semestre):
         return self._notas[(materia, semestre)]
+    
+    def total_notas(self):         
+        return len(self._notas)
