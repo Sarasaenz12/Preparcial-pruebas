@@ -27,6 +27,11 @@ class RegistroNotas:
     def aprueba(self, materia: str, semestre: str) -> bool:
         """Retorna True si la nota registrada es >= NOTA_APROBACION (3.0)."""
         return self._notas[(materia, semestre)] >= self.NOTA_APROBACION
+    
+    def calcular_promedio(self):        
+        if not self._notas:
+            return 0.0
+        return sum(self._notas.values()) / len(self._notas)
 
     def obtener_nota(self, materia, semestre):
         return self._notas[(materia, semestre)]
