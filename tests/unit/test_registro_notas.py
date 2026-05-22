@@ -33,3 +33,21 @@ class TestRegistrarNota:
     def test_CP05_nota_mayor_a_cinco_lanza_error(self, registro):
         with pytest.raises(NotaInvalidaError):
             registro.registrar_nota("Matematicas", "2024-1", 5.1)
+
+class TestAprobacion:
+
+    def test_CP08_nota_tres_punto_cero_exacto_aprueba(self, registro):
+        registro.registrar_nota("Calculo", "2024-1", 3.0)
+        assert registro.aprueba("Calculo", "2024-1") is True
+
+    def test_CP09_nota_dos_punto_nueve_reprueba(self, registro):
+        registro.registrar_nota("Calculo", "2024-1", 2.9)
+        assert registro.aprueba("Calculo", "2024-1") is False
+
+    def test_CP10_nota_alta_cuatro_punto_cinco_aprueba(self, registro):
+        registro.registrar_nota("Programacion", "2024-1", 4.5)
+        assert registro.aprueba("Programacion", "2024-1") is True
+
+    def test_CP11_nota_cero_reprueba(self, registro):
+        registro.registrar_nota("Estadistica", "2024-1", 0.0)
+        assert registro.aprueba("Estadistica", "2024-1") is False   
