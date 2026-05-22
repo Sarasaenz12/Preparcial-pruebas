@@ -71,3 +71,27 @@ class TestCalcularPromedio:
         registro.registrar_nota("A", "2024-1", 0.0)
         registro.registrar_nota("B", "2024-1", 5.0)
         assert registro.calcular_promedio() == 2.5
+
+class TestSinDuplicados:
+
+    def test_CP16_registrar_misma_materia_mismo_semestre_lanza_error(self, registro):
+        registro.registrar_nota("Matematicas", "2024-1", 3.5)
+        with pytest.raises(NotaDuplicadaError):
+            registro.registrar_nota("Matematicas", "2024-1", 4.0)
+
+    def test_CP17_misma_materia_diferente_semestre_es_permitido(self, registro):
+        registro.registrar_nota("Matematicas", "2024-1", 2.5)
+        registro.registrar_nota("Matematicas", "2024-2", 3.8)
+        assert registro.obtener_nota("Matematicas", "2024-1") == 2.5
+        assert registro.obtener_nota("Matematicas", "2024-2") == 3.8
+
+    def test_CP18_diferente_materia_mismo_semestre_es_permitido(self, registro):
+        registro.registrar_nota("Matematicas", "2024-1", 3.5)
+        registro.registrar_nota("Fisica", "2024-1", 4.0)
+        assert registro.total_notas() == 2
+
+    def test_CP19_error_duplicado_no_sobreescribe_nota_existente(self, registro):
+        registro.registrar_nota("Calculo", "2024-1", 3.5)
+        with pytest.raises(NotaDuplicadaError):
+            registro.registrar_nota("Calculo", "2024-1", 1.0)
+        assert registro.obtener_nota("Calculo", "2024-1") == 3.5
