@@ -25,7 +25,7 @@ class RegistroNotas:
             )
         
     def aprueba(self, materia: str, semestre: str) -> bool:
-        """Retorna True si la nota es >= 3.0."""
+        """Retorna True si la nota registrada es >= NOTA_APROBACION (3.0)."""
         return self._notas[(materia, semestre)] >= self.NOTA_APROBACION
 
     def obtener_nota(self, materia, semestre):
