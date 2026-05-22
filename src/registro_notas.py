@@ -6,13 +6,23 @@ class NotaDuplicadaError(Exception):
 
 class RegistroNotas:
 
+    NOTA_MINIMA = 0.0
+    NOTA_MAXIMA = 5.0
+    NOTA_APROBACION = 3.0
+
     def __init__(self):
         self._notas = {}
 
     def registrar_nota(self, materia, semestre, nota):
-        if nota < 0.0 or nota > 5.0:          # mínimo para pasar los tests
-            raise NotaInvalidaError(f"Nota {nota} fuera de rango.")
+        self._validar_nota(nota)
         self._notas[(materia, semestre)] = nota
+
+    def _validar_nota(self, nota):
+        if nota < self.NOTA_MINIMA or nota > self.NOTA_MAXIMA:
+            raise NotaInvalidaError(
+                f"La nota {nota} no es valida. Debe estar entre "
+                f"{self.NOTA_MINIMA} y {self.NOTA_MAXIMA}."
+            )
 
     def obtener_nota(self, materia, semestre):
         return self._notas[(materia, semestre)]
