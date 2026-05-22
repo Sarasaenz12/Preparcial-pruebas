@@ -23,6 +23,10 @@ class RegistroNotas:
                 f"La nota {nota} no es valida. Debe estar entre "
                 f"{self.NOTA_MINIMA} y {self.NOTA_MAXIMA}."
             )
+        
+    def aprueba(self, materia: str, semestre: str) -> bool:
+        """Retorna True si la nota es >= 3.0."""
+        return self._notas[(materia, semestre)] >= self.NOTA_APROBACION
 
     def obtener_nota(self, materia, semestre):
         return self._notas[(materia, semestre)]
