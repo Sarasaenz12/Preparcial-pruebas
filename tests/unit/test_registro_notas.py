@@ -51,3 +51,23 @@ class TestAprobacion:
     def test_CP11_nota_cero_reprueba(self, registro):
         registro.registrar_nota("Estadistica", "2024-1", 0.0)
         assert registro.aprueba("Estadistica", "2024-1") is False   
+
+class TestCalcularPromedio:
+
+    def test_CP12_promedio_sin_notas_es_cero(self, registro):
+        assert registro.calcular_promedio() == 0.0
+
+    def test_CP13_promedio_con_una_nota_es_la_nota_misma(self, registro):
+        registro.registrar_nota("Fisica", "2024-1", 4.0)
+        assert registro.calcular_promedio() == 4.0
+
+    def test_CP14_promedio_con_multiples_notas_calcula_correctamente(self, registro):
+        registro.registrar_nota("Matematicas", "2024-1", 3.0)
+        registro.registrar_nota("Fisica", "2024-1", 4.0)
+        registro.registrar_nota("Quimica", "2024-1", 5.0)
+        assert registro.calcular_promedio() == 4.0
+
+    def test_CP15_promedio_con_notas_extremas(self, registro):
+        registro.registrar_nota("A", "2024-1", 0.0)
+        registro.registrar_nota("B", "2024-1", 5.0)
+        assert registro.calcular_promedio() == 2.5
