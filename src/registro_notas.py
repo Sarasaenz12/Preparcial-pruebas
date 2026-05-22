@@ -25,10 +25,12 @@ class RegistroNotas:
                 f"{self.NOTA_MINIMA} y {self.NOTA_MAXIMA}."
             )
         
-    def _verificar_duplicado(self, materia, semestre):   # ← método nuevo
+    def _verificar_duplicado(self, materia, semestre):
         if (materia, semestre) in self._notas:
+            nota_existente = self._notas[(materia, semestre)]  # ← más informativo
             raise NotaDuplicadaError(
-                f"Ya existe una nota para '{materia}' en '{semestre}'."
+                f"Ya existe una nota para '{materia}' en '{semestre}': "
+                f"{nota_existente}. No se puede sobreescribir."
             )
         
     def aprueba(self, materia: str, semestre: str) -> bool:
