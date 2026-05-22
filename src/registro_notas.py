@@ -28,8 +28,12 @@ class RegistroNotas:
         """Retorna True si la nota registrada es >= NOTA_APROBACION (3.0)."""
         return self._notas[(materia, semestre)] >= self.NOTA_APROBACION
     
-    def calcular_promedio(self):        
-        if not self._notas:
+    def _hay_notas(self):
+        """Retorna True si existe al menos una nota registrada."""
+        return len(self._notas) > 0
+    
+    def calcular_promedio(self):
+        if not self._hay_notas():      
             return 0.0
         return sum(self._notas.values()) / len(self._notas)
 
